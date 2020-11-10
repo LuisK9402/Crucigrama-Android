@@ -8,10 +8,12 @@ public class CharField extends androidx.appcompat.widget.AppCompatTextView {
     private int col;
     private int row;
     private int[] linkedWordId;
+    private boolean correct;
 
     public CharField(Context context){
         super(context);
         this.linkedWordId = new int[2];
+        this.correct = false;
     }
 
     public CharField(Context context, int fila, int columna){
@@ -19,6 +21,7 @@ public class CharField extends androidx.appcompat.widget.AppCompatTextView {
         this.col = columna;
         this.row = fila;
         this.linkedWordId = new int[2];
+        this.correct = false;
     }
 
     public void setLinkedWordId(int wordId){
@@ -53,5 +56,13 @@ public class CharField extends androidx.appcompat.widget.AppCompatTextView {
     public void setPos(int fila, int columna){
         this.col = columna;
         this.row = fila;
+    }
+
+    public boolean isCorrect() {
+        return correct;
+    }
+
+    public void setCorrect(boolean correct) {
+        this.correct = correct;
     }
 }

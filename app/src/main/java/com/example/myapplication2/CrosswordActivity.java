@@ -6,18 +6,12 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.Spanned;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -27,7 +21,7 @@ public class CrosswordActivity extends AppCompatActivity {
 
     GridLayout target; // CW's GridLayout
     int[][] mtxId; // Matrix that contains each CharField's Id by (row, col)
-    int[][] mtxChr; // Matrix that contains each character that should go in each (row,col) [CW Solution]
+    char[][] mtxChr; // Matrix that contains each character that should go in each (row,col) [CW Solution]
     int mtxSize; // Number of rows/columns of the whole matrix, including inactive cells
     int wordCount; // Number of words in the CW
     private int cellSize; // Height/Width of each cell
@@ -40,6 +34,7 @@ public class CrosswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crossword);
+//        TextView pista = findViewById(R.id.pista);
         Intent i = getIntent();
         String level = i.getStringExtra("level");
 
@@ -51,20 +46,20 @@ public class CrosswordActivity extends AppCompatActivity {
 
         crucigrama = new Crucigrama(wordCount);
         mtxSize = 7;
-        mtxChr = new int[mtxSize][mtxSize];
+        mtxChr = new char[mtxSize][mtxSize];
         mtxId = new int[mtxSize][mtxSize];
 
         focusInfo = new FocusInfo();
         focusInfo.setFocusedOrientation(0);
 
         //Prueba
-        final Palabra palabra1 = new Palabra(1, "CASA",
+        final Palabra palabra1 = new Palabra(0, "CASA",
                 "Lugar donde viven las personas", 1, 4, 1);
-        final Palabra palabra2 = new Palabra(2, "PANAL",
+        final Palabra palabra2 = new Palabra(1, "PANAL",
                 "Lugar donde viven las abejas", 2, 1, 0);
-        final Palabra palabra3 = new Palabra(3, "CAS",
+        final Palabra palabra3 = new Palabra(2, "CAS",
                 "Fruta verde que se usa para hacer fresco y helados", 4, 3, 0);
-        final Palabra palabra4 = new Palabra(4, "APIO",
+        final Palabra palabra4 = new Palabra(3, "APIO",
                 "Verdura larga, crujiente y verde, de bajas calorias", 1, 1, 1);
 
         crucigrama.insertPalabra(palabra1);
@@ -94,11 +89,11 @@ public class CrosswordActivity extends AppCompatActivity {
     }
 
     // Sets a cell active (BG color, clickable, assigns listeners)
-    public void activateCell(int fila, int columna, char letra) {
+    public void activateCell(int fila, int columna) {
 
         CharField myEdtxt = findViewById(mtxId[fila][columna]);
         myEdtxt.setFocusable(true);
-        myEdtxt.setText(String.valueOf(letra));
+        myEdtxt.setText("");
         myEdtxt.setFocusableInTouchMode(true);
         myEdtxt.setClickable(true);
         myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.edit_text_border));
@@ -106,7 +101,9 @@ public class CrosswordActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-//                    Toast.makeText(MainActivity.this, String.valueOf(v.getId()), Toast.LENGTH_SHORT).show();
+                    if(focusInfo.getCharFocusedId()!=-1) {
+                        removeWordFocus(focusInfo.getCharFocusedId());
+                    }
                     setWordFocus(v.getId());
                 } else {
                     removeWordFocus(v.getId());
@@ -154,7 +151,7 @@ public class CrosswordActivity extends AppCompatActivity {
 //        Toast.makeText(this, String.valueOf(this.focusedOrientation), Toast.LENGTH_SHORT).show();
     }
 
-    // Sets the respective word focus
+    // Sets the respective focus of a Palabra and CharField given a CharField id
     public void setWordFocus(int id) {
         CharField edTxt = findViewById(id);
         this.focusInfo.setCharFocusedId(id);
@@ -164,6 +161,8 @@ public class CrosswordActivity extends AppCompatActivity {
             palabra = crucigrama.palabraAt(edTxt.getCol(), edTxt.getRow(), this.focusInfo.getFocusedOrientation());
         }
         if (palabra != null) {
+            TextView pista = findViewById(R.id.pista);
+            pista.setText(palabra.getDescripcion());
             int head_row = palabra.getHeadRow();
             int head_col = palabra.getHeadColumn();
             int col = head_col;
@@ -176,7 +175,9 @@ public class CrosswordActivity extends AppCompatActivity {
                 } else {
                     row = head_row + i;
                 }
-                setFocusColor(row, col, 1);
+                if(!((CharField)findViewById(mtxId[row][col])).isCorrect()) {
+                    setFocusColor(row, col, 1);
+                }
                 i++;
             }
             setFocusColor(edTxt.getRow(), edTxt.getCol(), 2);
@@ -208,12 +209,10 @@ public class CrosswordActivity extends AppCompatActivity {
                 setFocusColor(row, col, 0);
                 i++;
             }
-        } else {
-//            Toast.makeText(this, "ERROR 2", Toast.LENGTH_SHORT).show();
         }
     }
 
-    // Sets the char in the corresponding (row,col) of the solution matrix
+    // Sets the chars  of a word in the corresponding (row,col) of the solution matrix
     public void setOnCharMtx(int fila, int columna, Palabra palabra, int idx) {
 //        Toast.makeText(this, String.valueOf(idx), Toast.LENGTH_SHORT).show();
         this.mtxChr[fila][columna] = palabra.getPalabra().charAt(idx);
@@ -226,7 +225,7 @@ public class CrosswordActivity extends AppCompatActivity {
         int idx = 0;
         int fila = fila_h;
         int columna = columna_h;
-        char letra;
+//        char letra;
 
 
         linkWord(palabra);
@@ -234,9 +233,9 @@ public class CrosswordActivity extends AppCompatActivity {
 
         while (idx < palabra.getLength()) {
 
-            letra = palabra.getPalabra().charAt(idx);
+//            letra = palabra.getPalabra().charAt(idx);
             setOnCharMtx(fila, columna, palabra, idx);
-            activateCell(fila, columna, letra);
+            activateCell(fila, columna);
 
             idx++;
             if (palabra.getOrientacion() == Palabra.VERTICAL) {
@@ -311,13 +310,15 @@ public class CrosswordActivity extends AppCompatActivity {
 
 
     //////////////////////////////////////////////////
+    //  KEYBOARD
     //////////////////////////////////////////////////
 
-    public int keySize(GridLayout kb) {
+//    public int keySize(GridLayout kb) {
 //        Toast.makeText(this, String.valueOf(kb.getWidth() / (kb.getColumnCount()) * 3), Toast.LENGTH_SHORT).show();
-        return kb.getWidth() / (kb.getColumnCount() * 3);
-    }
+//        return kb.getWidth() / (kb.getColumnCount() * 3);
+//    }
 
+    // Creates the keyboard layout
     public void createKeyboard() {
 
         LinearLayout keyboardLine;
@@ -325,7 +326,7 @@ public class CrosswordActivity extends AppCompatActivity {
         int[] lineas = {R.id.linea1,R.id.linea2,R.id.linea3};
 
         int maxCol = 10;
-        int maxRow = 3;
+//        int maxRow = 3;
 
         String[] abc = new String[]{"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
                 "A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ",
@@ -350,13 +351,162 @@ public class CrosswordActivity extends AppCompatActivity {
         }
     }
 
+    // Changes the text of the focused CharField according to the pressed button
     public void setLetter(View v){
+        int inc_dec;
         String letter = ((Button)v).getText().toString();
         CharField myEdt = findViewById(focusInfo.getCharFocusedId());
         myEdt.setText(letter);
+        Palabra palabra;
+        if(isCorrect(this.crucigrama.getPalabras()[this.focusInfo.getWordFocusedId()])){
+            palabra = findUnfinishedWord();
+            if(palabra==null){
+                // TODO Win function
+                Toast.makeText(this, "Ganó !!!", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                removeWordFocus(myEdt.getId());
+                setCorrect(this.crucigrama.getPalabras()[this.focusInfo.getWordFocusedId()]);
+                int empty = firstEmpty(palabra);
+                setWordFocus(empty);
+                focusInfo.setFocusInfo(empty, palabra.getOrientacion(), palabra.getIdx());
+                return;
+            }
+        }
+        if(letter.equals(" ")){
+            inc_dec=-1;
+        }
+        else {
+            inc_dec=1;
+        }
+        nextFocus(myEdt.getId(),inc_dec);
     }
 
-    public void nextFocus(){
+    // Checks if a word is complete and sets the complete bit in true
+    public boolean isCorrect(Palabra palabra){
+        CharField myEdtxt;
+        int row=palabra.getHeadRow();
+        int col=palabra.getHeadColumn();
+        int idx=0;
+//        Palabra palabraAux;
+//        int[] ids;
 
+        while (idx < palabra.getLength()) {
+
+            myEdtxt = findViewById(mtxId[row][col]);
+            if(!myEdtxt.getText().equals(String.valueOf(mtxChr[row][col]))){
+                return false;
+            }
+
+            idx++;
+            if (palabra.getOrientacion() == Palabra.VERTICAL) {
+                row = palabra.getHeadRow() + idx;
+            } else {
+                col = palabra.getHeadColumn() + idx;
+            }
+        }
+/*        myEdtxt = findViewById(this.focusInfo.getCharFocusedId());
+        for(int i=0; i<myEdtxt.getLinkedWordsId().length;i++){
+            ids = myEdtxt.getLinkedWordsId();
+            palabraAux = this.crucigrama.getPalabras()[ids[i]];
+            palabraAux.setReady(true);
+        }
+
+ */
+        palabra.setReady(true);
+        return true;
+
+    }
+
+    // Finds a word thas isn't complete
+    public Palabra findUnfinishedWord(){
+        for(int i=0;i<this.crucigrama.getLast();i++){
+            if(!crucigrama.getPalabras()[i].isReady()){
+                return crucigrama.getPalabras()[i];
+            }
+        }
+        return null;
+    }
+
+    // Changes the focus to the next/previous CharField after a key is pressed
+    public void nextFocus(int id, int inc_dec){
+        int next_row;
+        int next_col;
+        int next_id;
+        int max_row;
+        int max_col;
+        CharField myEdtxt = findViewById(id);
+        int col = myEdtxt.getCol();
+        int row = myEdtxt.getRow();
+        Palabra palabra = crucigrama.palabraAt(col,row,focusInfo.getFocusedOrientation());
+        if(myEdtxt.getRow()<this.mtxSize && myEdtxt.getCol()<this.mtxSize) {
+            if (focusInfo.getFocusedOrientation() == Palabra.HORIZONTAL) {
+                next_row = myEdtxt.getRow();
+                next_col = myEdtxt.getCol() + inc_dec;
+                max_row = myEdtxt.getRow();
+                max_col = palabra.getHeadColumn() + palabra.getLength() - inc_dec;
+            } else {
+                next_row = myEdtxt.getRow() + inc_dec;
+                next_col = myEdtxt.getCol();
+                max_row = palabra.getHeadRow() + palabra.getLength() - inc_dec;
+                max_col = myEdtxt.getCol();
+            }
+            while (((CharField) findViewById(mtxId[next_row][next_col])).isCorrect()) {
+                if (focusInfo.getFocusedOrientation() == Palabra.HORIZONTAL) {
+                    next_col = next_col + inc_dec;
+                } else {
+                    next_row = next_row + inc_dec;
+                }
+            }
+            if (next_row <= max_row && next_col <= max_col && next_row >= palabra.getHeadRow() && next_col >= palabra.getHeadColumn()) {
+                next_id = mtxId[next_row][next_col];
+                setWordFocus(next_id);
+            }
+        }
+
+    }
+
+    public int firstEmpty(Palabra palabra){
+        CharField myEdtxt;
+        int row=palabra.getHeadRow();
+        int col=palabra.getHeadColumn();
+        int idx=0;
+
+        while (idx < palabra.getLength()) {
+
+            myEdtxt = findViewById(mtxId[row][col]);
+            if(myEdtxt.getText().equals("")){
+                return mtxId[row][col];
+            }
+
+            idx++;
+            if (palabra.getOrientacion() == Palabra.VERTICAL) {
+                row = palabra.getHeadRow() + idx;
+            } else {
+                col = palabra.getHeadColumn() + idx;
+            }
+        }
+        return -1;
+    }
+
+    public void setCorrect(Palabra palabra){
+        CharField myEdtxt;
+        int row=palabra.getHeadRow();
+        int col=palabra.getHeadColumn();
+        int idx=0;
+
+        while (idx < palabra.getLength()) {
+
+            myEdtxt = findViewById(mtxId[row][col]);
+            myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.correct));
+            myEdtxt.setCorrect(true);
+
+            idx++;
+            if (palabra.getOrientacion() == Palabra.VERTICAL) {
+                row = palabra.getHeadRow() + idx;
+            } else {
+                col = palabra.getHeadColumn() + idx;
+            }
+        }
     }
 }

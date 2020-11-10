@@ -8,6 +8,7 @@ public class Palabra {
     private int[] head;
     private int orientacion;
     private int length;
+    private boolean ready;
     final static int HORIZONTAL = 0;
     final static int VERTICAL = 1;
 
@@ -18,6 +19,8 @@ public class Palabra {
         this.head = head;
         this.orientacion = orientacion;
         this.length = palabra.length();
+        this.ready = false;
+
     }
 
     public Palabra(int idx, String palabra, String descripcion, int headRow, int headColumn, int orientacion){
@@ -29,6 +32,7 @@ public class Palabra {
         this.head[1] = headColumn;
         this.orientacion = orientacion;
         this.length = palabra.length();
+        this.ready = false;
     }
 
 
@@ -74,4 +78,11 @@ public class Palabra {
         this.idx = Idx;
     }
 
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
+    }
 }

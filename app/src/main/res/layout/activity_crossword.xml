@@ -21,6 +21,15 @@
 
     </GridLayout>
 
+    <TextView
+        android:id="@+id/pista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="hint"
+        android:gravity="center"
+        android:background="@color/colorAccent"/>
+
+
 <!--    <GridLayout-->
 <!--        android:id="@+id/keyboard"-->
 <!--        android:layout_width="wrap_content"-->

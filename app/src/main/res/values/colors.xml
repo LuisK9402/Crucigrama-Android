@@ -6,5 +6,6 @@
     <color name="borderColor">#000000</color>
     <color name="focus_lvl_1">#FFAC6F</color>
     <color name="focus_lvl_2">#FD8D3A</color>
+    <color name="correct">#55E608</color>
 
 </resources>
