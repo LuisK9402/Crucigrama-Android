@@ -32,9 +32,13 @@ public class DatabaseAcces {
         }
     }
 
-
-//    public getDatos(String name){
-//        c = db.rawQuery("SELECT * FROM crucigrama", new String[]{});
-//        int[]
-//    }
+    public String getCwData(int nivel){
+        c = db.rawQuery("SELECT cwInfo FROM niveles WHERE nivel = "+nivel, new String[]{});
+        StringBuffer buffer = new StringBuffer();
+        while(c.moveToNext()){
+                String datos = c.getString(0);
+                buffer.append(""+datos);
+        }
+        return buffer.toString();
+    }
 }

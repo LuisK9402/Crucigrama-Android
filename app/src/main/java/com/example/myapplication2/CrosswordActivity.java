@@ -17,6 +17,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -38,17 +42,17 @@ public class CrosswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crossword);
 //        TextView pista = findViewById(R.id.pista);
-        Intent i = getIntent();
-        int level = i.getIntExtra("level",0);
+        Intent intent = getIntent();
+        int level = intent.getIntExtra("level",0);
 
 //        Toast.makeText(this, level, Toast.LENGTH_SHORT).show();
 
         target = findViewById(R.id.myGrid);
         cellSize = evenWidth(target);
-        wordCount = 4;
 
-        crucigrama = new Crucigrama(wordCount);
-        mtxSize = 7;
+
+
+        mtxSize = 11;
         mtxChr = new char[mtxSize][mtxSize];
         mtxId = new int[mtxSize][mtxSize];
 
@@ -56,19 +60,43 @@ public class CrosswordActivity extends AppCompatActivity {
         focusInfo.setFocusedOrientation(0);
 
         //Prueba
-        final Palabra palabra1 = new Palabra(0, "CASA",
-                "Lugar donde viven las personas", 1, 4, 1);
-        final Palabra palabra2 = new Palabra(1, "PANAL",
-                "Lugar donde viven las abejas", 2, 1, 0);
-        final Palabra palabra3 = new Palabra(2, "CAS",
-                "Fruta verde que se usa para hacer fresco y helados", 4, 3, 0);
-        final Palabra palabra4 = new Palabra(3, "APIO",
-                "Verdura larga, crujiente y verde, de bajas calorias", 1, 1, 1);
+//        final Palabra palabra1 = new Palabra(0, "CASA",
+//                "Lugar donde viven las personas", 1, 4, 1);
+//        final Palabra palabra2 = new Palabra(1, "PANAL",
+//                "Lugar donde viven las abejas", 2, 1, 0);
+//        final Palabra palabra3 = new Palabra(2, "CAS",
+//                "Fruta verde que se usa para hacer fresco y helados", 4, 3, 0);
+//        final Palabra palabra4 = new Palabra(3, "APIO",
+//                "Verdura larga, crujiente y verde, de bajas calorias", 1, 1, 1);
+//
+//        wordCount = 4;
+//        crucigrama = new Crucigrama(wordCount);
+//        crucigrama.insertPalabra(palabra1);
+//        crucigrama.insertPalabra(palabra2);
+//        crucigrama.insertPalabra(palabra3);
+//        crucigrama.insertPalabra(palabra4);
 
-        crucigrama.insertPalabra(palabra1);
-        crucigrama.insertPalabra(palabra2);
-        crucigrama.insertPalabra(palabra3);
-        crucigrama.insertPalabra(palabra4);
+        String json_string = "{\"data\":[{\"palabra\":\"TELEFONO\",\"descripcion\":\"Aparato utilizado para hacer llamadas\",\"headRow\":1,\"headCol\":1,\"orientacion\":0},{\"palabra\":\"ALEJAR\",\"descripcion\":\"Poner o llevar algo más lejos\",\"headRow\":3,\"headCol\":2,\"orientacion\":0},{\"palabra\":\"BOLA\",\"descripcion\":\"Objeto esférico usado en el fútbol\",\"headRow\":5,\"headCol\":1,\"orientacion\":0},{\"palabra\":\"MAR\",\"descripcion\":\"Lugar por donde navega un barco\",\"headRow\":6,\"headCol\":4,\"orientacion\":0},{\"palabra\":\"CANCION\",\"descripcion\":\"Pieza musical\",\"headRow\":8,\"headCol\":2,\"orientacion\":0},{\"palabra\":\"HELADO\",\"descripcion\":\"Postre frío a base de leche\",\"headRow\":0,\"headCol\":2,\"orientacion\":1},{\"palabra\":\"EXAMEN\",\"descripcion\":\"Evaluación \",\"headRow\":3,\"headCol\":4,\"orientacion\":1},{\"palabra\":\"RUIZ\",\"descripcion\":\"Apellido del futbolista Bryan “La Comadreja”\",\"headRow\":6,\"headCol\":6,\"orientacion\":1},{\"palabra\":\"NARIZ\",\"descripcion\":\"Parte del cuerpo que sirve para oler\",\"headRow\":1,\"headCol\":7,\"orientacion\":1}]}";
+        try{
+            JSONObject jsonObject = new JSONObject(json_string);
+            JSONArray jsonArray = jsonObject.getJSONArray("data");
+            wordCount = jsonArray.length();
+            crucigrama = new Crucigrama(wordCount);
+            for(int i=0; i<jsonArray.length();i++){
+                JSONObject dato = jsonArray.getJSONObject(i);
+                //Prueba
+                String pal = dato.getString("palabra");
+                String desc = dato.getString("descripcion");
+                int hrow = dato.getInt("headRow");
+                int hcol = dato.getInt("headCol");
+                int hori = dato.getInt("orientacion");
+                Palabra nuevaPalabra = new Palabra(i,dato.getString("palabra"),dato.getString("descripcion"),dato.getInt("headRow"),dato.getInt("headCol"),dato.getInt("orientacion"));
+                this.crucigrama.insertPalabra(nuevaPalabra);
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
         // All this happens once the Grid size is already set
         target.post(new Runnable() {

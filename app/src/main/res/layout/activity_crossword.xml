@@ -15,8 +15,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:columnCount="7"
-        android:rowCount="7"
+        android:columnCount="11"
+        android:rowCount="11"
         android:layout_weight="1.5">
 
     </GridLayout>
