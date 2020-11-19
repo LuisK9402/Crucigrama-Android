@@ -19,7 +19,10 @@ public class LevelSelectorActivity extends AppCompatActivity {
 
     public void selectLevel(View v){
         Intent i = new Intent(getApplicationContext(),CrosswordActivity.class);
-        i.putExtra("level", ((Button) v).getText().toString());
+        String buttonText = ((Button) v).getText().toString();
+        String buttonTextAux = buttonText.replaceAll("Nivel ", "");
+        int level = Integer.parseInt(buttonText.replaceAll("Nivel ", ""));
+        i.putExtra("level", level);
         startActivity(i);
     }
 }

@@ -17,6 +17,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 public class CrosswordActivity extends AppCompatActivity {
 
     GridLayout target; // CW's GridLayout
@@ -36,7 +39,7 @@ public class CrosswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crossword);
 //        TextView pista = findViewById(R.id.pista);
         Intent i = getIntent();
-        String level = i.getStringExtra("level");
+        int level = i.getIntExtra("level",0);
 
 //        Toast.makeText(this, level, Toast.LENGTH_SHORT).show();
 
@@ -76,6 +79,7 @@ public class CrosswordActivity extends AppCompatActivity {
                 for (int i = 0; i < crucigrama.getLast(); i++) {
                     placeWord(crucigrama.palabraAt(i));
                 }
+                setWordFocus(mtxId[crucigrama.palabraAt(0).getHeadRow()][crucigrama.palabraAt(0).getHeadColumn()]);
                 createKeyboard();
             }
         });
@@ -86,6 +90,17 @@ public class CrosswordActivity extends AppCompatActivity {
     // Sets the cell size
     private void setCellSize() {
         this.cellSize = evenWidth(this.target);
+    }
+
+    // Read and set up the words on crucigrama from .json file based on level selected
+    private void setCrossword(int level){
+        String data = "";
+        try {
+            InputStream inputStream = getAssets().open("crucigramas.json");
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Sets a cell active (BG color, clickable, assigns listeners)
@@ -206,7 +221,9 @@ public class CrosswordActivity extends AppCompatActivity {
                 } else {
                     row = head_row + i;
                 }
-                setFocusColor(row, col, 0);
+                if(!((CharField)findViewById(mtxId[row][col])).isCorrect()) {
+                    setFocusColor(row, col, 0);
+                }
                 i++;
             }
         }
@@ -313,11 +330,6 @@ public class CrosswordActivity extends AppCompatActivity {
     //  KEYBOARD
     //////////////////////////////////////////////////
 
-//    public int keySize(GridLayout kb) {
-//        Toast.makeText(this, String.valueOf(kb.getWidth() / (kb.getColumnCount()) * 3), Toast.LENGTH_SHORT).show();
-//        return kb.getWidth() / (kb.getColumnCount() * 3);
-//    }
-
     // Creates the keyboard layout
     public void createKeyboard() {
 
@@ -330,7 +342,7 @@ public class CrosswordActivity extends AppCompatActivity {
 
         String[] abc = new String[]{"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
                 "A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ",
-                "Z", "X", "C", "V", "B", "N", "M", " ", " ", " "};
+                "Z", "X", "C", "V", "B", "N", "M", "", "", ""};
 
         for (int i=0; i<lineas.length; i++){
             keyboardLine = findViewById(lineas[i]);
@@ -352,29 +364,40 @@ public class CrosswordActivity extends AppCompatActivity {
     }
 
     // Changes the text of the focused CharField according to the pressed button
+    // And checks if word is correct and if there is any unfinished word left or game is over
     public void setLetter(View v){
         int inc_dec;
         String letter = ((Button)v).getText().toString();
         CharField myEdt = findViewById(focusInfo.getCharFocusedId());
+        String previousText = (String) myEdt.getText();
         myEdt.setText(letter);
         Palabra palabra;
+        Palabra correctWordId;
         if(isCorrect(this.crucigrama.getPalabras()[this.focusInfo.getWordFocusedId()])){
             palabra = findUnfinishedWord();
             if(palabra==null){
                 // TODO Win function
+                setCorrect(this.crucigrama.getPalabras()[this.focusInfo.getWordFocusedId()]);
                 Toast.makeText(this, "Ganó !!!", Toast.LENGTH_SHORT).show();
             }
             else{
                 removeWordFocus(myEdt.getId());
-                setCorrect(this.crucigrama.getPalabras()[this.focusInfo.getWordFocusedId()]);
-                int empty = firstEmpty(palabra);
-                setWordFocus(empty);
-                focusInfo.setFocusInfo(empty, palabra.getOrientacion(), palabra.getIdx());
+                correctWordId = this.crucigrama.getPalabras()[this.focusInfo.getWordFocusedId()];
+                int emptyChar = firstEmpty(palabra);
+                focusInfo.setFocusInfo(emptyChar, palabra.getOrientacion(), palabra.getIdx());
+                CharField nextEdt = findViewById(emptyChar);
+                nextEdt.requestFocus();
+                setCorrect(correctWordId);
+                //setWordFocus(emptyChar);
+
                 return;
             }
         }
-        if(letter.equals(" ")){
+        if(letter.equals("")){
             inc_dec=-1;
+            if(previousText.equals("")){
+                nextFocus(myEdt.getId(),inc_dec);
+            }
         }
         else {
             inc_dec=1;
@@ -466,6 +489,7 @@ public class CrosswordActivity extends AppCompatActivity {
 
     }
 
+    // Finds the first empty char in a word
     public int firstEmpty(Palabra palabra){
         CharField myEdtxt;
         int row=palabra.getHeadRow();
@@ -489,6 +513,7 @@ public class CrosswordActivity extends AppCompatActivity {
         return -1;
     }
 
+    // Changes color of a word that is correct
     public void setCorrect(Palabra palabra){
         CharField myEdtxt;
         int row=palabra.getHeadRow();
@@ -500,6 +525,8 @@ public class CrosswordActivity extends AppCompatActivity {
             myEdtxt = findViewById(mtxId[row][col]);
             myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.correct));
             myEdtxt.setCorrect(true);
+            myEdtxt.setFocusable(false);
+            myEdtxt.setCursorVisible(false);
 
             idx++;
             if (palabra.getOrientacion() == Palabra.VERTICAL) {

@@ -1,0 +1,18 @@
+{
+  "crucigramas": [
+    {
+      "nivel1": [
+        {"nombre":"TELEFONO","descripcion":"Aparato utilizado para hacer llamadas","headCol":1,"headRow":1,"orientacion":"H"},
+        {"nombre":"ALEJAR","descripcion":"Poner o llevar algo más lejos","headCol":3,"headRow":2,"orientacion":"H"},
+        {"nombre":"BOLA","descripcion":"Objeto esférico usado en el fútbol","headCol":5,"headRow":1,"orientacion":"H"},
+        {"nombre":"MAR","descripcion":"Lugar por donde navega un barco","headCol":6,"headRow":4,"orientacion":"H"},
+        {"nombre":"CANCION","descripcion":"Pieza musical","headCol":8,"headRow":2,"orientacion":"H"},
+        {"nombre":"HELADO","descripcion":"Postre frío a base de leche","headCol":0,"headRow":2,"orientacion":"V"},
+        {"nombre":"EXAMEN","descripcion":"Evaluación ","headCol":3,"headRow":4,"orientacion":"V"},
+        {"nombre":"RUIZ","descripcion":"Apellido del futbolista Bryan “La Comadreja”","headCol":6,"headRow":6,"orientacion":"V"},
+        {"nombre":"NARIZ","descripcion":"Parte del cuerpo que sirve para oler","headCol":1,"headRow":7,"orientacion":"V"}
+      ]
+    }
+  ]
+}
+
