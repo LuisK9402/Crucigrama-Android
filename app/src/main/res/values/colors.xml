@@ -4,8 +4,11 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="borderColor">#000000</color>
+    <color name="focus_lvl_0">#FFFFFF</color>
     <color name="focus_lvl_1">#EFE269</color>
     <color name="focus_lvl_2">#F36335</color>
     <color name="correct">#55E608</color>
+
+    <color name="texto_tema1">#000000</color>
 
 </resources>

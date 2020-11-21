@@ -5,6 +5,21 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="texto_general" >@color/texto_tema1 </item>
+    </style>
+
+    <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorprueba" >@color/colorPrimary </item>
+<!--        <item name="border_color" >@color/ </item>-->
+<!--        <attr name="fill_lvl_0" format="reference|color" />-->
+<!--        <attr name="fill_lvl_1" format="reference|color" />-->
+<!--        <attr name="fill_lvl_2" format="reference|color" />-->
+<!--        <attr name="char_txt" format="reference|color" />-->
+<!--        <attr name="btn_txt" format="reference|color" />-->
+<!--        <attr name="fill_btn" format="reference|color" />-->
+    </style>
+
+    <style name="CustomTheme2" parent="Theme.AppCompat.Light.NoActionBar">
     </style>
 
 </resources>

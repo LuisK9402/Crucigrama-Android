@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".OptionsActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingVertical="15dp"
+        android:paddingHorizontal="25dp"
+        android:background="@color/colorPrimary">
+
+       <Button
+           android:id="@+id/returnOptBtn"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Regresar"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="25dp"
+        android:paddingHorizontal="25dp"
+        android:weightSum="1">
+
+
+        <TextView
+            android:id="@+id/colorMenu"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Camiar Colores"
+            android:textColor="?attr/texto_general"/>
+<!--            android:textColor="?attr/text_color"-->
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="7dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:paddingVertical="25dp"
+        android:paddingHorizontal="25dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Voz a Texto"
+            android:textColor="?attr/texto_general"
+            android:layout_weight="0.9"
+            android:layout_gravity="center"
+            />
+
+        <Switch
+            android:id="@+id/txt2voiceSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

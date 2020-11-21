@@ -6,8 +6,12 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -23,6 +27,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Locale;
 
 public class CrosswordActivity extends AppCompatActivity {
 
@@ -34,6 +39,9 @@ public class CrosswordActivity extends AppCompatActivity {
     private int cellSize; // Height/Width of each cell
     FocusInfo focusInfo; // Contains info about focused cells
     Crucigrama crucigrama; // Object that contains all the words of current CW
+    TextToSpeech t2v; // Text to speech
+    boolean txt2voiceActive;
+    DatabaseAcces db;
 
 
     @SuppressLint("ResourceType")
@@ -41,11 +49,31 @@ public class CrosswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crossword);
-//        TextView pista = findViewById(R.id.pista);
+        TextView pista = findViewById(R.id.pista);
         Intent intent = getIntent();
         int level = intent.getIntExtra("level",0);
+        db = DatabaseAcces.getInstance(this);
 
 //        Toast.makeText(this, level, Toast.LENGTH_SHORT).show();
+
+        SharedPreferences preferencias = getSharedPreferences("cw_preferences", Context.MODE_PRIVATE);
+
+        txt2voiceActive= preferencias.getBoolean("txt2voice",false);
+
+        t2v = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int status) {
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = t2v.setLanguage(Locale.getDefault());
+                    if (result == TextToSpeech.LANG_MISSING_DATA
+                            || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("TTS", "Lenguaje no soportado");
+                    }
+                } else {
+                    Log.e("TTS", "Fallo en inicialización de TTS");
+                }
+            }
+        });
 
         target = findViewById(R.id.myGrid);
         cellSize = evenWidth(target);
@@ -76,7 +104,10 @@ public class CrosswordActivity extends AppCompatActivity {
 //        crucigrama.insertPalabra(palabra3);
 //        crucigrama.insertPalabra(palabra4);
 
-        String json_string = "{\"data\":[{\"palabra\":\"TELEFONO\",\"descripcion\":\"Aparato utilizado para hacer llamadas\",\"headRow\":1,\"headCol\":1,\"orientacion\":0},{\"palabra\":\"ALEJAR\",\"descripcion\":\"Poner o llevar algo más lejos\",\"headRow\":3,\"headCol\":2,\"orientacion\":0},{\"palabra\":\"BOLA\",\"descripcion\":\"Objeto esférico usado en el fútbol\",\"headRow\":5,\"headCol\":1,\"orientacion\":0},{\"palabra\":\"MAR\",\"descripcion\":\"Lugar por donde navega un barco\",\"headRow\":6,\"headCol\":4,\"orientacion\":0},{\"palabra\":\"CANCION\",\"descripcion\":\"Pieza musical\",\"headRow\":8,\"headCol\":2,\"orientacion\":0},{\"palabra\":\"HELADO\",\"descripcion\":\"Postre frío a base de leche\",\"headRow\":0,\"headCol\":2,\"orientacion\":1},{\"palabra\":\"EXAMEN\",\"descripcion\":\"Evaluación \",\"headRow\":3,\"headCol\":4,\"orientacion\":1},{\"palabra\":\"RUIZ\",\"descripcion\":\"Apellido del futbolista Bryan “La Comadreja”\",\"headRow\":6,\"headCol\":6,\"orientacion\":1},{\"palabra\":\"NARIZ\",\"descripcion\":\"Parte del cuerpo que sirve para oler\",\"headRow\":1,\"headCol\":7,\"orientacion\":1}]}";
+        db.openDb();
+        String json_string = db.getCwData(level);
+        db.closeDb();
+
         try{
             JSONObject jsonObject = new JSONObject(json_string);
             JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -98,6 +129,14 @@ public class CrosswordActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        pista.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String texto = ((TextView) v).getText().toString();
+                read(texto);
+            }
+        });
+
         // All this happens once the Grid size is already set
         target.post(new Runnable() {
             @Override
@@ -107,6 +146,7 @@ public class CrosswordActivity extends AppCompatActivity {
                 for (int i = 0; i < crucigrama.getLast(); i++) {
                     placeWord(crucigrama.palabraAt(i));
                 }
+                activateHeadsCells();
                 setWordFocus(mtxId[crucigrama.palabraAt(0).getHeadRow()][crucigrama.palabraAt(0).getHeadColumn()]);
                 createKeyboard();
             }
@@ -115,21 +155,19 @@ public class CrosswordActivity extends AppCompatActivity {
 
     }
 
+    //////////////////////////////////////////////////////////////////////////
+
+    private void read(String texto){
+        if(this.txt2voiceActive){
+            this.t2v.speak(texto, TextToSpeech.QUEUE_ADD, null);
+        }
+    }
+
     // Sets the cell size
     private void setCellSize() {
         this.cellSize = evenWidth(this.target);
     }
 
-    // Read and set up the words on crucigrama from .json file based on level selected
-    private void setCrossword(int level){
-        String data = "";
-        try {
-            InputStream inputStream = getAssets().open("crucigramas.json");
-            
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     // Sets a cell active (BG color, clickable, assigns listeners)
     public void activateCell(int fila, int columna) {
@@ -139,7 +177,7 @@ public class CrosswordActivity extends AppCompatActivity {
         myEdtxt.setText("");
         myEdtxt.setFocusableInTouchMode(true);
         myEdtxt.setClickable(true);
-        myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.edit_text_border));
+        myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.fondoh_lvl_0));
         myEdtxt.setOnFocusChangeListener(new OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -168,20 +206,46 @@ public class CrosswordActivity extends AppCompatActivity {
 
     }
 
+    public void activateHeadsCells(){
+        for(int i=0; i<crucigrama.getLast(); i++){
+            Palabra palabra = crucigrama.palabraAt(i);
+            int headRow = palabra.getHeadRow();
+            int headCol = palabra.getHeadColumn();
+            int idx = palabra.getIdx()+1;
+            setHeadFocusColor(headRow,headCol,0,idx);
+        }
+    }
+
     // Change color of cell acordding to focus level)
     public void setFocusColor(int fila, int columna, int focus_lvl) {
         CharField myEdtxt = findViewById(mtxId[fila][columna]);
         switch (focus_lvl) {
             case 0:
-                myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.edit_text_border));
+                myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.fondoh_lvl_0));
                 break;
             case 1:
-                myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.focused_lvl_1));
+                myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.fondoh_lvl_1));
                 break;
             case 2:
-                myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.focused_lvl_2));
+                myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.fondoh_lvl_2));
                 break;
         }
+//        myEdtxt.setWidth(this.cellSize);
+//        myEdtxt.setHeight(this.cellSize);
+
+    }
+
+    public void setHeadFocusColor(int fila, int columna, int focus_lvl, int idx){
+        CharField myEdtxt = findViewById(mtxId[fila][columna]);
+        String resName = "fondoh_lvl_";
+        resName = resName + String.valueOf(focus_lvl) + "_" + String.valueOf(idx);
+
+        int resourceID = getResources().getIdentifier(
+                resName,
+                "drawable",
+                getPackageName()
+        );
+        myEdtxt.setBackground(ContextCompat.getDrawable(this, resourceID));
     }
 
     // Inverts the focus orientation
@@ -219,11 +283,19 @@ public class CrosswordActivity extends AppCompatActivity {
                     row = head_row + i;
                 }
                 if(!((CharField)findViewById(mtxId[row][col])).isCorrect()) {
-                    setFocusColor(row, col, 1);
+                    if(row == head_row && col == head_col){
+                        setHeadFocusColor(head_row,head_col,1,palabra.getIdx()+1);
+                    }else {
+                        setFocusColor(row, col, 1);
+                    }
                 }
                 i++;
             }
-            setFocusColor(edTxt.getRow(), edTxt.getCol(), 2);
+            if(edTxt.getRow() == head_row && edTxt.getCol() == head_col){
+                setHeadFocusColor(head_row,head_col,2,palabra.getIdx()+1);
+            }else {
+                setFocusColor(edTxt.getRow(), edTxt.getCol(), 2);
+            }
 
         } else {
             switchOrientation();
@@ -370,7 +442,7 @@ public class CrosswordActivity extends AppCompatActivity {
 
         String[] abc = new String[]{"Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P",
                 "A", "S", "D", "F", "G", "H", "J", "K", "L", "Ñ",
-                "Z", "X", "C", "V", "B", "N", "M", "", "", ""};
+                "Z", "X", "C", "V", "B", "N", "M", "←", "←", "←"};
 
         for (int i=0; i<lineas.length; i++){
             keyboardLine = findViewById(lineas[i]);
@@ -397,8 +469,16 @@ public class CrosswordActivity extends AppCompatActivity {
         int inc_dec;
         String letter = ((Button)v).getText().toString();
         CharField myEdt = findViewById(focusInfo.getCharFocusedId());
+        CharField myEdtAux;
         String previousText = (String) myEdt.getText();
-        myEdt.setText(letter);
+        if(letter=="←"){
+            myEdt.setText("");
+        }
+        else{
+            myEdt.setText(letter);
+        }
+
+        read(letter);
         Palabra palabra;
         Palabra correctWordId;
         if(isCorrect(this.crucigrama.getPalabras()[this.focusInfo.getWordFocusedId()])){
@@ -421,16 +501,22 @@ public class CrosswordActivity extends AppCompatActivity {
                 return;
             }
         }
-        if(letter.equals("")){
+        if(letter.equals("←")){
+            read("Borrar");
             inc_dec=-1;
             if(previousText.equals("")){
-                nextFocus(myEdt.getId(),inc_dec);
+                if(nextFocus(myEdt.getId(),inc_dec)) { // Si no es el primero
+                    myEdtAux = findViewById(focusInfo.getCharFocusedId());
+                    myEdtAux.setText("");
+                }
             }
         }
         else {
             inc_dec=1;
+            nextFocus(myEdt.getId(),inc_dec);
         }
-        nextFocus(myEdt.getId(),inc_dec);
+
+
     }
 
     // Checks if a word is complete and sets the complete bit in true
@@ -480,7 +566,7 @@ public class CrosswordActivity extends AppCompatActivity {
     }
 
     // Changes the focus to the next/previous CharField after a key is pressed
-    public void nextFocus(int id, int inc_dec){
+    public boolean nextFocus(int id, int inc_dec){
         int next_row;
         int next_col;
         int next_id;
@@ -512,8 +598,10 @@ public class CrosswordActivity extends AppCompatActivity {
             if (next_row <= max_row && next_col <= max_col && next_row >= palabra.getHeadRow() && next_col >= palabra.getHeadColumn()) {
                 next_id = mtxId[next_row][next_col];
                 setWordFocus(next_id);
+                return true;
             }
         }
+        return false;
 
     }
 
@@ -563,5 +651,7 @@ public class CrosswordActivity extends AppCompatActivity {
                 col = palabra.getHeadColumn() + idx;
             }
         }
+        read(palabra.getPalabra());
+        read("Palabra Correcta!");
     }
 }

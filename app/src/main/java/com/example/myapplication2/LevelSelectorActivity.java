@@ -21,6 +21,7 @@ public class LevelSelectorActivity extends AppCompatActivity {
         Intent i = new Intent(getApplicationContext(),CrosswordActivity.class);
         String buttonText = ((Button) v).getText().toString();
         String buttonTextAux = buttonText.replaceAll("Nivel ", "");
+        setTheme(R.style.CustomTheme);
         int level = Integer.parseInt(buttonText.replaceAll("Nivel ", ""));
         i.putExtra("level", level);
         startActivity(i);
