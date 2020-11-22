@@ -31,15 +31,10 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        int resourceID = getResources().getIdentifier(
-                "btn_levelSelector",
-                "id",
-                getPackageName()
-        );
-
-
         Button btn_levelSelector = (Button) findViewById(R.id.btn_levelSelector);
         Button btn_options = (Button) findViewById(R.id.btn_options);
+
+
 
         btn_levelSelector.setOnClickListener(new View.OnClickListener() {
             @Override

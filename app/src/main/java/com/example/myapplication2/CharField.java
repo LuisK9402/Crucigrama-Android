@@ -9,17 +9,11 @@ public class CharField extends androidx.appcompat.widget.AppCompatTextView {
     private int row;
     private int[] linkedWordId;
     private boolean correct;
+    private boolean isHead;
+    private int headIdx;
 
     public CharField(Context context){
         super(context);
-        this.linkedWordId = new int[2];
-        this.correct = false;
-    }
-
-    public CharField(Context context, int fila, int columna){
-        super(context);
-        this.col = columna;
-        this.row = fila;
         this.linkedWordId = new int[2];
         this.correct = false;
     }
@@ -33,24 +27,12 @@ public class CharField extends androidx.appcompat.widget.AppCompatTextView {
         }
     }
 
-    public int[] getLinkedWordsId(){
-        return linkedWordId;
-    }
-
     public int getCol() {
         return col;
     }
 
-    public void setCol(int col) {
-        this.col = col;
-    }
-
     public int getRow() {
         return row;
-    }
-
-    public void setRow(int row) {
-        this.row = row;
     }
 
     public void setPos(int fila, int columna){
@@ -64,5 +46,21 @@ public class CharField extends androidx.appcompat.widget.AppCompatTextView {
 
     public void setCorrect(boolean correct) {
         this.correct = correct;
+    }
+
+    public boolean isHead(){
+        return this.isHead;
+    }
+
+    public void setHead(Boolean isHead){
+        this.isHead = isHead;
+    }
+
+    public int getHeadIdx() {
+        return headIdx;
+    }
+
+    public void setHeadIdx(int headIdx) {
+        this.headIdx = headIdx;
     }
 }

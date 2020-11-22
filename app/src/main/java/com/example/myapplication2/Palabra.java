@@ -12,17 +12,6 @@ public class Palabra {
     final static int HORIZONTAL = 0;
     final static int VERTICAL = 1;
 
-    public Palabra(int idx, String palabra, String descripcion, int[] head, int orientacion){
-        this.idx = idx;
-        this.palabra = palabra;
-        this.descripcion = descripcion;
-        this.head = head;
-        this.orientacion = orientacion;
-        this.length = palabra.length();
-        this.ready = false;
-
-    }
-
     public Palabra(int idx, String palabra, String descripcion, int headRow, int headColumn, int orientacion){
         this.idx = idx;
         this.palabra = palabra;
@@ -51,12 +40,6 @@ public class Palabra {
         return descripcion;
     }
 
-
-    public int[] getHead() {
-        return head;
-    }
-
-
     public int getOrientacion() {
         return orientacion;
     }
@@ -72,10 +55,6 @@ public class Palabra {
 
     public int getHeadColumn(){
         return this.head[1];
-    }
-
-    public void setIdx(int Idx){
-        this.idx = Idx;
     }
 
     public boolean isReady() {

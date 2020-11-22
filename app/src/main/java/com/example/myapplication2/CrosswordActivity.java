@@ -24,9 +24,6 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Locale;
 
 public class CrosswordActivity extends AppCompatActivity {
@@ -42,7 +39,7 @@ public class CrosswordActivity extends AppCompatActivity {
     TextToSpeech t2v; // Text to speech
     boolean txt2voiceActive;
     DatabaseAcces db;
-
+    FontSize fontSize;
 
     @SuppressLint("ResourceType")
     @Override
@@ -54,11 +51,15 @@ public class CrosswordActivity extends AppCompatActivity {
         int level = intent.getIntExtra("level",0);
         db = DatabaseAcces.getInstance(this);
 
-//        Toast.makeText(this, level, Toast.LENGTH_SHORT).show();
-
         SharedPreferences preferencias = getSharedPreferences("cw_preferences", Context.MODE_PRIVATE);
 
         txt2voiceActive= preferencias.getBoolean("txt2voice",false);
+
+        fontSize = new FontSize(preferencias.getInt("CellFontSize",11),
+                                preferencias.getInt("ButtonFontSize",11),
+                                preferencias.getInt("HintFontSize",11));
+
+        pista.setTextSize(this.fontSize.HINT);
 
         t2v = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -75,10 +76,9 @@ public class CrosswordActivity extends AppCompatActivity {
             }
         });
 
+
+
         target = findViewById(R.id.myGrid);
-        cellSize = evenWidth(target);
-
-
 
         mtxSize = 11;
         mtxChr = new char[mtxSize][mtxSize];
@@ -86,23 +86,6 @@ public class CrosswordActivity extends AppCompatActivity {
 
         focusInfo = new FocusInfo();
         focusInfo.setFocusedOrientation(0);
-
-        //Prueba
-//        final Palabra palabra1 = new Palabra(0, "CASA",
-//                "Lugar donde viven las personas", 1, 4, 1);
-//        final Palabra palabra2 = new Palabra(1, "PANAL",
-//                "Lugar donde viven las abejas", 2, 1, 0);
-//        final Palabra palabra3 = new Palabra(2, "CAS",
-//                "Fruta verde que se usa para hacer fresco y helados", 4, 3, 0);
-//        final Palabra palabra4 = new Palabra(3, "APIO",
-//                "Verdura larga, crujiente y verde, de bajas calorias", 1, 1, 1);
-//
-//        wordCount = 4;
-//        crucigrama = new Crucigrama(wordCount);
-//        crucigrama.insertPalabra(palabra1);
-//        crucigrama.insertPalabra(palabra2);
-//        crucigrama.insertPalabra(palabra3);
-//        crucigrama.insertPalabra(palabra4);
 
         db.openDb();
         String json_string = db.getCwData(level);
@@ -115,12 +98,6 @@ public class CrosswordActivity extends AppCompatActivity {
             crucigrama = new Crucigrama(wordCount);
             for(int i=0; i<jsonArray.length();i++){
                 JSONObject dato = jsonArray.getJSONObject(i);
-                //Prueba
-                String pal = dato.getString("palabra");
-                String desc = dato.getString("descripcion");
-                int hrow = dato.getInt("headRow");
-                int hcol = dato.getInt("headCol");
-                int hori = dato.getInt("orientacion");
                 Palabra nuevaPalabra = new Palabra(i,dato.getString("palabra"),dato.getString("descripcion"),dato.getInt("headRow"),dato.getInt("headCol"),dato.getInt("orientacion"));
                 this.crucigrama.insertPalabra(nuevaPalabra);
             }
@@ -209,29 +186,35 @@ public class CrosswordActivity extends AppCompatActivity {
     public void activateHeadsCells(){
         for(int i=0; i<crucigrama.getLast(); i++){
             Palabra palabra = crucigrama.palabraAt(i);
+            CharField myEdtxt;
             int headRow = palabra.getHeadRow();
             int headCol = palabra.getHeadColumn();
-            int idx = palabra.getIdx()+1;
-            setHeadFocusColor(headRow,headCol,0,idx);
+            myEdtxt = findViewById(mtxId[headRow][headCol]);
+            myEdtxt.setHead(true);
+            myEdtxt.setHeadIdx(palabra.getIdx()+1);
+            setHeadFocusColor(headRow,headCol,0,myEdtxt.getHeadIdx());
         }
     }
 
     // Change color of cell acordding to focus level)
     public void setFocusColor(int fila, int columna, int focus_lvl) {
         CharField myEdtxt = findViewById(mtxId[fila][columna]);
-        switch (focus_lvl) {
-            case 0:
-                myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.fondoh_lvl_0));
-                break;
-            case 1:
-                myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.fondoh_lvl_1));
-                break;
-            case 2:
-                myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.fondoh_lvl_2));
-                break;
+        if(myEdtxt.isHead()){
+            setHeadFocusColor(fila, columna, focus_lvl, myEdtxt.getHeadIdx());
         }
-//        myEdtxt.setWidth(this.cellSize);
-//        myEdtxt.setHeight(this.cellSize);
+        else {
+            switch (focus_lvl) {
+                case 0:
+                    myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.fondoh_lvl_0));
+                    break;
+                case 1:
+                    myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.fondoh_lvl_1));
+                    break;
+                case 2:
+                    myEdtxt.setBackground(ContextCompat.getDrawable(this, R.drawable.fondoh_lvl_2));
+                    break;
+            }
+        }
 
     }
 
@@ -269,7 +252,7 @@ public class CrosswordActivity extends AppCompatActivity {
         }
         if (palabra != null) {
             TextView pista = findViewById(R.id.pista);
-            pista.setText(palabra.getDescripcion());
+            pista.setText(String.valueOf(edTxt.getHeadIdx())+ ". " + palabra.getDescripcion());
             int head_row = palabra.getHeadRow();
             int head_col = palabra.getHeadColumn();
             int col = head_col;
@@ -283,23 +266,14 @@ public class CrosswordActivity extends AppCompatActivity {
                     row = head_row + i;
                 }
                 if(!((CharField)findViewById(mtxId[row][col])).isCorrect()) {
-                    if(row == head_row && col == head_col){
-                        setHeadFocusColor(head_row,head_col,1,palabra.getIdx()+1);
-                    }else {
-                        setFocusColor(row, col, 1);
-                    }
+                    setFocusColor(row, col, 1);
                 }
                 i++;
             }
-            if(edTxt.getRow() == head_row && edTxt.getCol() == head_col){
-                setHeadFocusColor(head_row,head_col,2,palabra.getIdx()+1);
-            }else {
-                setFocusColor(edTxt.getRow(), edTxt.getCol(), 2);
-            }
+            setFocusColor(edTxt.getRow(), edTxt.getCol(), 2);
 
         } else {
             switchOrientation();
-//            Toast.makeText(this, "ERROR 1", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -324,8 +298,10 @@ public class CrosswordActivity extends AppCompatActivity {
                 if(!((CharField)findViewById(mtxId[row][col])).isCorrect()) {
                     setFocusColor(row, col, 0);
                 }
+
                 i++;
             }
+
         }
     }
 
@@ -342,15 +318,10 @@ public class CrosswordActivity extends AppCompatActivity {
         int idx = 0;
         int fila = fila_h;
         int columna = columna_h;
-//        char letra;
-
-
         linkWord(palabra);
-//        Toast.makeText(this, String.valueOf(palabra.getLength()), Toast.LENGTH_SHORT).show();
 
         while (idx < palabra.getLength()) {
 
-//            letra = palabra.getPalabra().charAt(idx);
             setOnCharMtx(fila, columna, palabra, idx);
             activateCell(fila, columna);
 
@@ -394,6 +365,8 @@ public class CrosswordActivity extends AppCompatActivity {
                 myTxt.setLayoutParams(nlparams);
                 myTxt.setBackground(null);
                 myTxt.setText("");
+                myTxt.setTextSize(this.fontSize.CELL);
+                myTxt.setTextAppearance(this, R.style.fontStyle);
                 myTxt.setWidth(this.cellSize);
                 myTxt.setHeight(this.cellSize);
                 myTxt.setGravity(Gravity.CENTER);
@@ -452,6 +425,7 @@ public class CrosswordActivity extends AppCompatActivity {
                         0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
                 myBtn.setText(abc[i*maxCol+j]);
                 myBtn.setLayoutParams(nlparams);
+                myBtn.setTextSize(this.fontSize.BUTTON);
                 myBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

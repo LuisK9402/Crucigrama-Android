@@ -23,7 +23,7 @@
     </GridLayout>
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/divider1"
         android:layout_width="match_parent"
         android:layout_height="6dp"
         android:background="?android:attr/listDivider" />
@@ -35,10 +35,11 @@
         android:text="hint"
         android:gravity="center"
         android:textSize="20dp"
+        android:layout_marginHorizontal="5dp"
         android:background="@color/colorAccent"/>
 
     <View
-        android:id="@+id/divider"
+        android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="7dp"
         android:background="?android:attr/listDivider" />
