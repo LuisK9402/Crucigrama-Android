@@ -39,7 +39,7 @@ public class CrosswordActivity extends AppCompatActivity {
     TextToSpeech t2v; // Text to speech
     boolean txt2voiceActive;
     DatabaseAcces db;
-    FontSize fontSize;
+    FontOptions fontOptions;
 
     @SuppressLint("ResourceType")
     @Override
@@ -55,11 +55,14 @@ public class CrosswordActivity extends AppCompatActivity {
 
         txt2voiceActive= preferencias.getBoolean("txt2voice",false);
 
-        fontSize = new FontSize(preferencias.getInt("CellFontSize",11),
-                                preferencias.getInt("ButtonFontSize",11),
-                                preferencias.getInt("HintFontSize",11));
+        fontOptions = new FontOptions(preferencias.getInt("CellFontSize", 11),
+                preferencias.getInt("ButtonFontSize", 11),
+                preferencias.getInt("HintFontSize", 11),
+                preferencias.getString("ChosenFontStyle", "serif"),
+                this);
 
-        pista.setTextSize(this.fontSize.HINT);
+        pista.setTextSize(this.fontOptions.HINT);
+        pista.setTypeface(this.fontOptions.FONT_STYLE);
 
         t2v = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
             @Override
@@ -365,8 +368,8 @@ public class CrosswordActivity extends AppCompatActivity {
                 myTxt.setLayoutParams(nlparams);
                 myTxt.setBackground(null);
                 myTxt.setText("");
-                myTxt.setTextSize(this.fontSize.CELL);
-                myTxt.setTextAppearance(this, R.style.fontStyle);
+                myTxt.setTextSize(this.fontOptions.CELL);
+                myTxt.setTypeface(fontOptions.FONT_STYLE);
                 myTxt.setWidth(this.cellSize);
                 myTxt.setHeight(this.cellSize);
                 myTxt.setGravity(Gravity.CENTER);
@@ -424,8 +427,10 @@ public class CrosswordActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams nlparams = new LinearLayout.LayoutParams(
                         0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
                 myBtn.setText(abc[i*maxCol+j]);
+                nlparams.setMargins(-1, -1, -1, -1);
                 myBtn.setLayoutParams(nlparams);
-                myBtn.setTextSize(this.fontSize.BUTTON);
+                myBtn.setTextSize(this.fontOptions.BUTTON);
+                myBtn.setTypeface(this.fontOptions.FONT_STYLE);
                 myBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
