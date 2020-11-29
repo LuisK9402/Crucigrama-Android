@@ -7,6 +7,8 @@ import androidx.core.view.ViewCompat;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -25,9 +27,22 @@ import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity {
 
+    SharedPreferences preferencias;
+    SharedPreferences.Editor pref_editor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        preferencias = getSharedPreferences("cw_preferences", Context.MODE_PRIVATE);
+        pref_editor = preferencias.edit();
+
+        Resources.Theme tema = getTheme();
+        if(preferencias.getString("Tema", "Dark").equals("Dark")){
+            tema.applyStyle(R.style.DarkTheme,true);
+        }else{
+            tema.applyStyle(R.style.LightTheme,true);
+        }
 
         setContentView(R.layout.activity_main);
 

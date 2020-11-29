@@ -30,7 +30,7 @@
         <item name="fill_lvl_1">#633AAE</item>
         <item name="fill_lvl_2">#A52C6A</item>
         <item name="cell_txt">#FFC600</item>
-        <item name="cell_correct">#9FFF30</item>
+        <item name="cell_correct">#5C8A28</item>
 
         <item name="lvl_bg">#2b3953</item>
         <item name="lvl_btn_bg">#C15C55</item>
@@ -40,42 +40,42 @@
     </style>
 
     <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#D69028</item>
+        <item name="colorPrimaryDark">#BA5C3E</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlActivated">#F44336</item>
+        <item name="colorControlActivated">#1F3087</item>
 
-        <item name="main_bg">#D2D4D8</item>
+        <item name="main_bg">#ADB0B5</item>
 
-        <item name="button_bg">#EAC24A</item>
+        <item name="button_bg">#F4F4F4</item>
         <item name="button_txt">#000000</item>
 
-        <item name="upbar_txt">#FF0000</item>
+        <item name="upbar_txt">#000000</item>
 
-        <item name="divider_bg">#AAAAAA</item>
-        <item name="options_txt">#FFFFFF</item>
-        <item name="options_bg">#2b3953</item>
+        <item name="divider_bg">#F6F6F6</item>
+        <item name="options_txt">#000000</item>
+        <item name="options_bg">#ADB0B5</item>
 
-        <item name="hint_bg">#C15C55</item>
+        <item name="hint_bg">#ADB0B5</item>
         <item name="hint_txt">#000000</item>
 
-        <item name="keyboard_bg_key">#2b3953</item>
-        <item name="keyboard_txt">#F3C641</item>
-        <item name="keyboard_bg">#121212</item>
+        <item name="keyboard_bg_key">#F4F4F4</item>
+        <item name="keyboard_txt">#000000</item>
+        <item name="keyboard_bg">#1C1B11</item>
 
-        <item name="cw_bg">#295357</item>
-        <item name="cell_border">#D5C8C8</item>
-        <item name="fill_lvl_0">#244D93</item>
-        <item name="fill_lvl_1">#633AAE</item>
-        <item name="fill_lvl_2">#A52C6A</item>
-        <item name="cell_txt">#FFC600</item>
-        <item name="cell_correct">#9FFF30</item>
+        <item name="cw_bg">#30597A</item>
+        <item name="cell_border">#000000</item>
+        <item name="fill_lvl_0">#FFFFFF</item>
+        <item name="fill_lvl_1">#FFC800</item>
+        <item name="fill_lvl_2">#FF7F2B</item>
+        <item name="cell_txt">#000000</item>
+        <item name="cell_correct">#8FE32E</item>
 
-        <item name="lvl_bg">#2b3953</item>
-        <item name="lvl_btn_bg">#C15C55</item>
+        <item name="lvl_bg">#ADB0B5</item>
+        <item name="lvl_btn_bg">#F4F4F4</item>
         <item name="lvl_btn_txt">#000000</item>
 
-        <item name="android:colorForeground">#FFEB3B</item>
+        <item name="android:colorForeground">#000000</item>
     </style>
 
 </resources>

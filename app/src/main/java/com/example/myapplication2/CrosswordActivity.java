@@ -9,6 +9,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -43,17 +44,31 @@ public class CrosswordActivity extends AppCompatActivity {
     DatabaseAcces db;
     FontOptions fontOptions;
 
+    SharedPreferences preferencias;
+    SharedPreferences.Editor pref_editor;
+
     @SuppressLint("ResourceType")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        preferencias = getSharedPreferences("cw_preferences", Context.MODE_PRIVATE);
+        pref_editor = preferencias.edit();
+
+        Resources.Theme tema = getTheme();
+        if(preferencias.getString("Tema", "Dark").equals("Dark")){
+            tema.applyStyle(R.style.DarkTheme,true);
+        }else{
+            tema.applyStyle(R.style.LightTheme,true);
+        }
+
         setContentView(R.layout.activity_crossword);
         TextView pista = findViewById(R.id.pista);
         Intent intent = getIntent();
         int level = intent.getIntExtra("level",0);
         db = DatabaseAcces.getInstance(this);
 
-        SharedPreferences preferencias = getSharedPreferences("cw_preferences", Context.MODE_PRIVATE);
+//        SharedPreferences preferencias = getSharedPreferences("cw_preferences", Context.MODE_PRIVATE);
 
         txt2voiceActive= preferencias.getBoolean("txt2voice",false);
 
@@ -276,12 +291,9 @@ public class CrosswordActivity extends AppCompatActivity {
                 i++;
             }
             setFocusColor(edTxt.getRow(), edTxt.getCol(), 2);
-
         } else {
             switchOrientation();
         }
-
-
     }
 
     // Removes word focus
@@ -380,9 +392,7 @@ public class CrosswordActivity extends AppCompatActivity {
                 myTxt.setGravity(Gravity.CENTER);
                 myTxt.setFocusable(false);
                 myTxt.setCursorVisible(false);
-
                 target.addView(myTxt);
-
             }
         }
     }

@@ -6,6 +6,7 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +21,18 @@ public class LevelSelectorActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_level_selector);
 
         preferencias = getSharedPreferences("cw_preferences", Context.MODE_PRIVATE);
         pref_editor = preferencias.edit();
+
+        Resources.Theme tema = getTheme();
+        if(preferencias.getString("Tema", "Dark").equals("Dark")){
+            tema.applyStyle(R.style.DarkTheme,true);
+        }else{
+            tema.applyStyle(R.style.LightTheme,true);
+        }
+
+        setContentView(R.layout.activity_level_selector);
 
         FontOptions myFont = new FontOptions(preferencias.getInt("CellFontSize", 11),
                 preferencias.getInt("ButtonFontSize", 11),
