@@ -6,24 +6,77 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:weightSum="2"
+    android:weightSum="1"
+    android:background="?attr/main_bg"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_levelSelector"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Seleccionar Nivel"
-        android:layout_gravity="center"
-        android:layout_marginBottom="10dp"/>
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_weight="0.1"
+        android:background="@mipmap/ic_banner_foreground"
+        android:padding="400dp">
 
-    <Button
-        android:id="@+id/btn_options"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Opciones"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"/>
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:gravity="center"
+        android:layout_weight="0.6">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="0.5"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btn_levelSelector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seleccionar Nivel"
+                android:layout_gravity="center"
+                android:paddingVertical="30dp"
+                android:textSize="18dp"
+                android:background="?attr/button_bg"
+                android:textColor="?attr/button_txt"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/btn_options"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Opciones"
+                android:layout_gravity="center"
+                android:paddingVertical="30dp"
+                android:textSize="18dp"
+                android:background="?attr/button_bg"
+                android:textColor="?attr/button_txt"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/btn_exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Salir"
+                android:layout_gravity="center"
+                android:paddingVertical="30dp"
+                android:textSize="18dp"
+                android:background="?attr/button_bg"
+                android:textColor="?attr/button_txt"
+                android:layout_marginBottom="10dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
 
 
 </LinearLayout>

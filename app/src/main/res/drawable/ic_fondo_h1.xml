@@ -9,7 +9,7 @@
         android:strokeLineJoin="bevel"
         android:strokeWidth="0.81"
         android:fillColor="#fffcfc"
-        android:strokeColor="#000000"
+        android:strokeColor="?attr/cell_border"
         android:fillAlpha="0.724"
         android:strokeLineCap="square"/>
 </vector>

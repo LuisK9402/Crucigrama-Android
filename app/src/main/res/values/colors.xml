@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimary">#5A1BB5</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="borderColor">#000000</color>
@@ -10,5 +10,12 @@
     <color name="correct">#55E608</color>
 
     <color name="texto_tema1">#000000</color>
+
+    <color name="main_bg">#2b3953</color>
+    <color name="main_button_T">#000000</color>
+<!--    <color name="main_button_bg">#FFCE36</color>-->
+    <color name="main_button_bg">#EAC24A</color>
+
+
 
 </resources>

@@ -9,9 +9,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
@@ -368,6 +370,9 @@ public class CrosswordActivity extends AppCompatActivity {
                 myTxt.setLayoutParams(nlparams);
                 myTxt.setBackground(null);
                 myTxt.setText("");
+                TypedValue typedValue = new TypedValue();
+                getTheme().resolveAttribute(R.attr.cell_txt, typedValue, true);
+                myTxt.setTextColor(typedValue.data);
                 myTxt.setTextSize(this.fontOptions.CELL);
                 myTxt.setTypeface(fontOptions.FONT_STYLE);
                 myTxt.setWidth(this.cellSize);
@@ -427,8 +432,12 @@ public class CrosswordActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams nlparams = new LinearLayout.LayoutParams(
                         0, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
                 myBtn.setText(abc[i*maxCol+j]);
-                nlparams.setMargins(-1, -1, -1, -1);
                 myBtn.setLayoutParams(nlparams);
+                myBtn.setBackground(ContextCompat.getDrawable(this, R.drawable.button_key));
+                TypedValue typedValue = new TypedValue();
+                getTheme().resolveAttribute(R.attr.keyboard_txt, typedValue, true);
+
+                myBtn.setTextColor(typedValue.data);
                 myBtn.setTextSize(this.fontOptions.BUTTON);
                 myBtn.setTypeface(this.fontOptions.FONT_STYLE);
                 myBtn.setOnClickListener(new View.OnClickListener() {

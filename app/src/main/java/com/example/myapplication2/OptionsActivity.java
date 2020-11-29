@@ -5,6 +5,7 @@ import androidx.databinding.DataBindingUtil;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ public class OptionsActivity extends AppCompatActivity {
     Button returnBtn;
     RadioGroup radioFontSize;
     RadioGroup radioFontStyle;
+    RadioGroup radioColors;
 
     SharedPreferences preferencias;
     SharedPreferences.Editor pref_editor;
@@ -30,26 +32,33 @@ public class OptionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_options);
 
         preferencias = getSharedPreferences("cw_preferences", Context.MODE_PRIVATE);
         pref_editor = preferencias.edit();
 
+        Resources.Theme tema = getTheme();
+        if(preferencias.getString("Tema", "Dark").equals("Dark")){
+            tema.applyStyle(R.style.DarkTheme,true);
+        }else{
+            tema.applyStyle(R.style.LightTheme,true);
+        }
+
+        setContentView(R.layout.activity_options);
+
         FontOptions myFont = new FontOptions(preferencias.getInt("CellFontSize", 11),
-                                            preferencias.getInt("ButtonFontSize", 11),
-                                            preferencias.getInt("HintFontSize", 11),
-                                            preferencias.getString("ChosenFontStyle", "serif"),
-                                            this);
+                preferencias.getInt("ButtonFontSize", 11),
+                preferencias.getInt("HintFontSize", 11),
+                preferencias.getString("ChosenFontStyle", "serif"),
+                this);
 
         ActivityOptionsBinding myBinding = DataBindingUtil.setContentView(this,R.layout.activity_options);
         myBinding.setCustomFont(myFont);
-        setTheme(R.style.CustomTheme);
 
         txt2voiceSwitch = findViewById(R.id.txt2voiceSwitch);
-        colorBtn = findViewById(R.id.colorMenu);
         returnBtn = findViewById(R.id.returnOptBtn);
         radioFontSize = findViewById(R.id.radioGroupFontSize);
         radioFontStyle = findViewById(R.id.radioGroupFontStyle);
+        radioColors = findViewById(R.id.radioGroupColors);
 
         setSwitchstate(preferencias.getBoolean("txt2voice",false));
 
@@ -74,6 +83,19 @@ public class OptionsActivity extends AppCompatActivity {
                 break;
         }
 
+        if(preferencias.getString("Tema", "Dark").equals("Dark")){
+            ((RadioButton)findViewById(R.id.radioDark)).setChecked(true);
+        }else{
+            ((RadioButton)findViewById(R.id.radioLight)).setChecked(true);
+        }
+
+        returnBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         txt2voiceSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,12 +111,7 @@ public class OptionsActivity extends AppCompatActivity {
             }
         });
 
-        returnBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+
 
         radioFontSize.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
@@ -109,6 +126,14 @@ public class OptionsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 onStyleRadioButtonClicked(checkedId);
+            }
+        });
+
+        radioColors.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                onColorRadioButtonClicked(checkedId);
             }
         });
     }
@@ -132,7 +157,6 @@ public class OptionsActivity extends AppCompatActivity {
         switch(checkedId) {
             case R.id.radioSmall:
                 if(checked) {
-                    Toast.makeText(this, "Small", Toast.LENGTH_SHORT).show();
                     this.pref_editor.putInt("ChosenFontSize", FontOptions.SMALL_FONT);
                     this.pref_editor.putInt("CellFontSize", 10);
                     this.pref_editor.putInt("ButtonFontSize", 10);
@@ -141,7 +165,6 @@ public class OptionsActivity extends AppCompatActivity {
                 break;
             case R.id.radioMedium:
                 if(checked) {
-                    Toast.makeText(this, "Medio", Toast.LENGTH_SHORT).show();
                     this.pref_editor.putInt("ChosenFontSize", FontOptions.MEDIUM_FONT);
                     this.pref_editor.putInt("CellFontSize", 15);
                     this.pref_editor.putInt("ButtonFontSize", 15);
@@ -150,7 +173,6 @@ public class OptionsActivity extends AppCompatActivity {
                 break;
             case R.id.radioLarge:
                 if(checked) {
-                    Toast.makeText(this, "Grande", Toast.LENGTH_SHORT).show();
                     this.pref_editor.putInt("ChosenFontSize", FontOptions.LARGE_FONT);
                     this.pref_editor.putInt("CellFontSize", 20);
                     this.pref_editor.putInt("ButtonFontSize", 15);
@@ -160,6 +182,7 @@ public class OptionsActivity extends AppCompatActivity {
         }
 
         pref_editor.commit();
+        reload();
     }
 
     public void onStyleRadioButtonClicked(int checkedId) {
@@ -183,6 +206,36 @@ public class OptionsActivity extends AppCompatActivity {
         }
 
         pref_editor.commit();
+        reload();
+    }
+
+    private void onColorRadioButtonClicked(int checkedId){
+        // Is the button now checked?
+        boolean checked = ((RadioButton) findViewById(checkedId)).isChecked();
+
+        // Check which radio button was clicked
+        switch(checkedId) {
+            case R.id.radioDark:
+                if(checked) {
+                    this.pref_editor.putString("Tema", "Dark");
+                }
+                break;
+            case R.id.radioLight:
+                if(checked) {
+                    this.pref_editor.putString("Tema", "Light");
+                }
+                break;
+        }
+
+        pref_editor.commit();
+        reload();
+    }
+
+    private void reload(){
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(getIntent());
+        overridePendingTransition(0, 0);
     }
 
 }

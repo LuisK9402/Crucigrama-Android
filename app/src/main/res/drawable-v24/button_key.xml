@@ -8,7 +8,7 @@
 <!--        android:translateY="-9.219699">-->
         <path
             android:pathData="M3.2398,0.405L31.4935,0.405A2.8348,2.8348 0,0 1,34.3284 3.2398L34.3284,31.777A2.8348,2.8348 0,0 1,31.4935 34.6118L3.2398,34.6118A2.8348,2.8348 0,0 1,0.405 31.777L0.405,3.2398A2.8348,2.8348 0,0 1,3.2398 0.405z"
-            android:fillColor="?attr/fill_lvl_0"
+            android:fillColor="?attr/keyboard_bg_key"
             android:fillAlpha="1"
             android:strokeColor="?attr/cell_border"
             android:strokeAlpha="1"

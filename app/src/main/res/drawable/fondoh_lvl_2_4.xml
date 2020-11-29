@@ -8,15 +8,15 @@
         android:translateY="-9.219699">
         <path
             android:pathData="M50.176336 9.6246986h28.25372c1.570491 0 2.834821 1.2643304 2.834821 2.8348214v28.537198c0 1.570491 -1.26433 2.834821 -2.834821 2.834821h-28.25372c-1.570491 0 -2.834821 -1.26433 -2.834821 -2.834821V12.45952c0 -1.570491 1.26433 -2.8348214 2.834821 -2.8348214z"
-            android:fillColor="@color/focus_lvl_2"
+            android:fillColor="?attr/fill_lvl_2"
             android:fillAlpha="1"
-            android:strokeColor="#000000"
+            android:strokeColor="?attr/cell_border"
             android:strokeAlpha="1"
             android:strokeWidth="0.81"
             android:strokeLineCap="square"
             android:strokeLineJoin="bevel" />
         <path
             android:pathData="M54.881604 18.45566h1.252637v0.936377h-1.252637v2.095996H53.728186V19.392037H49.616809V18.71611l4.043164 -6.256983h1.221631zm-3.962549 0h2.809131v-4.427636l-0.136426 0.248047z"
-            android:fillColor="#000000" />
+            android:fillColor="?attr/cell_txt" />
     </group>
 </vector>

@@ -4,200 +4,269 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".OptionsActivity">
 
-
     <data>
         <variable
             name="customFont"
             type="com.example.myapplication2.FontOptions"/>
     </data>
-
-<LinearLayout
+<ScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:paddingVertical="15dp"
-        android:paddingHorizontal="25dp"
-        android:background="@color/colorPrimary">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="?attr/main_bg">
 
-       <Button
-           android:id="@+id/returnOptBtn"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:textSize="@{customFont.BUTTONdp}"
-           android:text="Regresar"
-           android:typeface="@{customFont.FONT_STYLE}"/>
-<!--           android:fontFamily="@{customFont.FONT_STYLE}"-->
-<!--            />-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="25dp"
+            android:background="@color/colorPrimary">
 
+            <Button
+                android:id="@+id/returnOptBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Regresar"
+                android:textSize="@{customFont.BUTTONdp}"
+                android:typeface="@{customFont.FONT_STYLE}"
+                android:paddingHorizontal="15dp"
+                android:background="?attr/button_bg"
+                android:textColor="?attr/button_txt" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Opciones"
+                android:textSize="@{customFont.CELLdp}"
+                android:typeface="@{customFont.FONT_STYLE}"
+                android:textColor="?attr/upbar_txt"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:background="?attr/divider_bg"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingVertical="25dp"
+            android:paddingHorizontal="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Colores"
+                android:layout_weight="0.6"
+                android:textColor="?attr/options_txt"
+                android:textSize="@{customFont.CELLdp}"
+                android:typeface="@{customFont.FONT_STYLE}"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupColors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right">
+
+                <RadioButton
+                    android:id="@+id/radioLight"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:textSize="@{customFont.CELLdp}"
+                    android:typeface="@{customFont.FONT_STYLE}"
+                    android:text="Tema Claro"
+                    android:textColor="?attr/options_txt"/>
+
+                <RadioButton
+                    android:id="@+id/radioDark"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:checked="false"
+                    android:textSize="@{customFont.CELLdp}"
+                    android:typeface="@{customFont.FONT_STYLE}"
+                    android:text="Tema Oscuro"
+                    android:textColor="?attr/options_txt"/>
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:background="?attr/divider_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingVertical="25dp"
+            android:paddingHorizontal="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Voz a Texto"
+                android:textColor="?attr/options_txt"
+                android:layout_weight="0.9"
+                android:layout_gravity="center"
+
+                android:textSize="@{customFont.CELLdp}"
+                android:typeface="@{customFont.FONT_STYLE}"
+                />
+
+            <Switch
+                android:id="@+id/txt2voiceSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textOn="Activado"
+                android:textOff="Desactivado"
+                android:textColor="?attr/options_txt"
+                android:typeface="@{customFont.FONT_STYLE}"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:background="?attr/divider_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingVertical="25dp"
+            android:paddingHorizontal="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tamaño de Letra"
+                android:textColor="?attr/options_txt"
+                android:layout_weight="0.6"
+                android:textSize="@{customFont.CELLdp}"
+                android:typeface="@{customFont.FONT_STYLE}"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupFontSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:textColor="?attr/options_txt">
+
+                <RadioButton
+                    android:id="@+id/radioSmall"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:text="  Pequeña"
+                    android:textSize="10dp"
+                    android:textColor="?attr/options_txt"
+                    android:typeface="@{customFont.FONT_STYLE}"/>
+
+                <RadioButton
+                    android:id="@+id/radioMedium"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:checked="false"
+                    android:text=" Mediana"
+                    android:textSize="13dp"
+                    android:textColor="?attr/options_txt"
+                    android:typeface="@{customFont.FONT_STYLE}"/>
+
+                <RadioButton
+                    android:id="@+id/radioLarge"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:checked="false"
+                    android:text=" Grande"
+                    android:textSize="20dp"
+                    android:textColor="?attr/options_txt"
+                    android:typeface="@{customFont.FONT_STYLE}"/>
+
+            </RadioGroup>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:background="?attr/divider_bg"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:paddingVertical="25dp"
+            android:paddingHorizontal="25dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fuente de Letra"
+                android:layout_weight="0.6"
+                android:textColor="?attr/options_txt"
+                android:textSize="@{customFont.CELLdp}"
+                android:typeface="@{customFont.FONT_STYLE}"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroupFontStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right">
+
+                <RadioButton
+                    android:id="@+id/radioSerif"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:fontFamily="serif"
+                    android:text="Fuente 1"
+                    android:textSize="20dp"
+                    android:textColor="?attr/options_txt"/>
+
+                <RadioButton
+                    android:id="@+id/radioDyslexic"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:checked="false"
+                    android:fontFamily="@font/opendyslexic_regular"
+                    android:text="Fuente 2"
+                    android:textSize="20dp"
+                    android:textColor="?attr/options_txt"/>
+
+            </RadioGroup>
+        </LinearLayout>
     </LinearLayout>
 
-    <View
-        android:id="@+id/divider1"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:background="?android:attr/listDivider" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingVertical="25dp"
-        android:paddingHorizontal="25dp"
-        android:weightSum="1">
-
-        <TextView
-            android:id="@+id/colorMenu"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Camiar Colores"
-            android:textColor="?attr/texto_general"/>
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:background="?android:attr/listDivider" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:paddingVertical="25dp"
-        android:paddingHorizontal="25dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Voz a Texto"
-            android:textColor="?attr/texto_general"
-            android:layout_weight="0.9"
-            android:layout_gravity="center"
-            />
-
-        <Switch
-            android:id="@+id/txt2voiceSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textOn="Activado"
-            android:textOff="Desactivado"
-            android:theme="@style/SCBSwitch"
-            />
-
-    </LinearLayout>
-
-    <View
-        android:id="@+id/divider3"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:background="?android:attr/listDivider" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:paddingVertical="25dp"
-        android:paddingHorizontal="25dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tamaño de Letra"
-            android:layout_weight="0.6"/>
-
-        <RadioGroup
-            android:id="@+id/radioGroupFontSize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right">
-
-            <RadioButton
-                android:id="@+id/radioSmall"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="  Pequeña"
-                android:textSize="10dp" />
-
-            <RadioButton
-                android:id="@+id/radioMedium"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:checked="false"
-                android:text=" Mediana"
-                android:textSize="13dp" />
-
-            <RadioButton
-                android:id="@+id/radioLarge"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:checked="false"
-                android:text=" Grande"
-                android:textSize="20dp" />
-
-        </RadioGroup>
-    </LinearLayout>
-
-    <View
-        android:id="@+id/divider4"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:background="?android:attr/listDivider" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="1"
-        android:paddingVertical="25dp"
-        android:paddingHorizontal="25dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fuente de Letra"
-            android:layout_weight="0.6"/>
-
-        <RadioGroup
-            android:id="@+id/radioGroupFontStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right">
-
-            <RadioButton
-                android:id="@+id/radioSerif"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:checked="false"
-                android:fontFamily="serif"
-                android:text="Fuente Tipo 1"
-                android:textSize="20dp" />
-
-            <RadioButton
-                android:id="@+id/radioDyslexic"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:checked="false"
-                android:fontFamily="@font/opendyslexic_regular"
-                android:text="Fuente Tipo 2"
-                android:textSize="20dp" />
-
-        </RadioGroup>
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>
 
 </layout>

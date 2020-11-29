@@ -8,8 +8,8 @@
         android:strokeAlpha="1"
         android:strokeLineJoin="bevel"
         android:strokeWidth="0.81"
-        android:fillColor="@color/focus_lvl_1"
-        android:strokeColor="#000000"
+        android:fillColor="?attr/fill_lvl_1"
+        android:strokeColor="?attr/cell_border"
         android:fillAlpha="1"
         android:strokeLineCap="square"/>
 </vector>

@@ -18,15 +18,15 @@
         android:paddingTop="20dp"
         android:columnCount="11"
         android:rowCount="11"
-        android:layout_weight="1.5">
-
+        android:layout_weight="1.5"
+        android:background="?attr/cw_bg">
     </GridLayout>
 
-    <View
-        android:id="@+id/divider1"
-        android:layout_width="match_parent"
-        android:layout_height="6dp"
-        android:background="?android:attr/listDivider" />
+<!--    <View-->
+<!--        android:id="@+id/divider1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="6dp"-->
+<!--        android:background="?android:attr/listDivider" />-->
 
     <TextView
         android:id="@+id/pista"
@@ -35,14 +35,14 @@
         android:text="hint"
         android:gravity="center"
         android:textSize="20dp"
-        android:layout_marginHorizontal="5dp"
-        android:background="@color/colorAccent"/>
+        android:background="?attr/hint_bg"
+        android:textColor="?attr/hint_txt"/>
 
-    <View
-        android:id="@+id/divider2"
-        android:layout_width="match_parent"
-        android:layout_height="7dp"
-        android:background="?android:attr/listDivider" />
+<!--    <View-->
+<!--        android:id="@+id/divider2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="7dp"-->
+<!--        android:background="?android:attr/listDivider" />-->
 <!--    <GridLayout-->
 <!--        android:id="@+id/keyboard"-->
 <!--        android:layout_width="wrap_content"-->
@@ -71,7 +71,8 @@
         android:layout_weight="0.5"
         android:orientation="vertical"
         android:weightSum="3"
-        android:layout_marginBottom="20dp">
+        android:paddingBottom="20dp"
+        android:background="?attr/keyboard_bg">
 
         <LinearLayout
             android:id="@+id/linea1"
@@ -79,17 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:weightSum="10">
-
-<!--            <Button-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="A">-->
-
-<!--            </Button>-->
-
-        </LinearLayout>
+            android:weightSum="10"/>
 
         <LinearLayout
             android:id="@+id/linea2"
@@ -98,15 +89,6 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="10">
-
-<!--            <Button-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="A">-->
-
-<!--            </Button>-->
-
         </LinearLayout>
 
         <LinearLayout
@@ -116,16 +98,7 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:weightSum="10">
-
-<!--            <Button-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:layout_weight="1"-->
-<!--                android:text="A">-->
-
-<!--            </Button>-->
         </LinearLayout>
-
 
     </LinearLayout>
 

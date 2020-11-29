@@ -1,51 +1,81 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
+    <style name="DarkTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="texto_general" >@color/texto_tema1 </item>
-        <item name="colorprueba" >@color/colorAccent</item>
-        <item name="colorControlActivated">#0728FA</item>
+        <item name="colorControlActivated">#F44336</item>
 
-        <!-- inactive thumb color -->
-        <item name="colorSwitchThumbNormal">#D80000</item>
+        <item name="main_bg">#2b3953</item>
 
-        <!-- inactive track color (30% transparency) -->
-        <item name="android:colorForeground">#3C7800</item>
+        <item name="button_bg">#EAC24A</item>
+        <item name="button_txt">#000000</item>
+
+        <item name="upbar_txt">#FFFFFF</item>
+
+        <item name="divider_bg">#AAAAAA</item>
+        <item name="options_txt">#FFFFFF</item>
+        <item name="options_bg">#2b3953</item>
+
+        <item name="hint_bg">#C15C55</item>
+        <item name="hint_txt">#000000</item>
+
+        <item name="keyboard_bg_key">#2b3953</item>
+        <item name="keyboard_txt">#F3C641</item>
+        <item name="keyboard_bg">#121212</item>
+
+        <item name="cw_bg">#295357</item>
+        <item name="cell_border">#D5C8C8</item>
+        <item name="fill_lvl_0">#244D93</item>
+        <item name="fill_lvl_1">#633AAE</item>
+        <item name="fill_lvl_2">#A52C6A</item>
+        <item name="cell_txt">#FFC600</item>
+        <item name="cell_correct">#9FFF30</item>
+
+        <item name="lvl_bg">#2b3953</item>
+        <item name="lvl_btn_bg">#C15C55</item>
+        <item name="lvl_btn_txt">#000000</item>
+
+        <item name="android:colorForeground">#FFEB3B</item>
     </style>
 
-    <style name="CustomTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorprueba" >@color/colorPrimary </item>
-<!--        <item name="border_color" >@color/ </item>-->
-<!--        <attr name="fill_lvl_0" format="reference|color" />-->
-<!--        <attr name="fill_lvl_1" format="reference|color" />-->
-<!--        <attr name="fill_lvl_2" format="reference|color" />-->
-<!--        <attr name="char_txt" format="reference|color" />-->
-<!--        <attr name="btn_txt" format="reference|color" />-->
-<!--        <attr name="fill_btn" format="reference|color" />-->
-    </style>
+    <style name="LightTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlActivated">#F44336</item>
 
-    <style name="CustomTheme2" parent="Theme.AppCompat.Light.NoActionBar">
-    </style>
+        <item name="main_bg">#D2D4D8</item>
 
-    <style name="fontStyle">
-        <item name="android:textStyle">italic</item>
-        <item name="android:fontFamily">@font/opendyslexic_regular</item>
-        <item name="android:padding">2dip</item>
-    </style>
+        <item name="button_bg">#EAC24A</item>
+        <item name="button_txt">#000000</item>
 
-    <style name="SCBSwitch" parent="Theme.AppCompat.Light">
-        <!-- active thumb & track color (30% transparency) -->
-        <item name="colorprueba" >@color/colorPrimaryDark</item>
-        <item name="colorControlActivated">?attr/colorprueba</item>
+        <item name="upbar_txt">#FF0000</item>
 
-        <!-- inactive thumb color -->
-        <item name="colorSwitchThumbNormal">#D80000</item>
+        <item name="divider_bg">#AAAAAA</item>
+        <item name="options_txt">#FFFFFF</item>
+        <item name="options_bg">#2b3953</item>
 
-        <!-- inactive track color (30% transparency) -->
-        <item name="android:colorForeground">#3C7800</item>
+        <item name="hint_bg">#C15C55</item>
+        <item name="hint_txt">#000000</item>
+
+        <item name="keyboard_bg_key">#2b3953</item>
+        <item name="keyboard_txt">#F3C641</item>
+        <item name="keyboard_bg">#121212</item>
+
+        <item name="cw_bg">#295357</item>
+        <item name="cell_border">#D5C8C8</item>
+        <item name="fill_lvl_0">#244D93</item>
+        <item name="fill_lvl_1">#633AAE</item>
+        <item name="fill_lvl_2">#A52C6A</item>
+        <item name="cell_txt">#FFC600</item>
+        <item name="cell_correct">#9FFF30</item>
+
+        <item name="lvl_bg">#2b3953</item>
+        <item name="lvl_btn_bg">#C15C55</item>
+        <item name="lvl_btn_txt">#000000</item>
+
+        <item name="android:colorForeground">#FFEB3B</item>
     </style>
 
 </resources>

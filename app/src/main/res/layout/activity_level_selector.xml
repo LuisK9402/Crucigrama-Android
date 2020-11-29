@@ -1,26 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".LevelSelectorActivity">
+
+    <data>
+        <variable
+            name="customFont"
+            type="com.example.myapplication2.FontOptions"/>
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="4">
+        android:orientation="vertical"
+        android:weightSum="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:weightSum="1"
+            android:layout_weight="0.1"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="25dp"
+            android:background="@color/colorPrimary">
+
+            <Button
+                android:id="@+id/returnLvlBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Regresar"
+                android:textSize="@{customFont.BUTTONdp}"
+                android:typeface="@{customFont.FONT_STYLE}"
+                android:paddingHorizontal="15dp"
+                android:background="?attr/button_bg"
+                android:textColor="?attr/button_txt" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.4"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Niveles"
+                android:textSize="@{customFont.CELLdp}"
+                android:typeface="@{customFont.FONT_STYLE}"
+                android:textColor="?attr/upbar_txt"
+                android:gravity="center"/>
 
 
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="1"
-            android:onClick="selectLevel"
-            android:text="Nivel 1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            android:layout_weight="0.9"
+            android:padding="15dp"
+            android:weightSum="4"
+            android:background="?attr/lvl_bg">
+
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:onClick="selectLevel"
+                android:text="Nivel 1"
+                android:layout_margin="5dp"
+                android:background="?attr/lvl_btn_bg"
+                android:textColor="?attr/lvl_btn_txt"/>
+
+<!--            <Button-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="100dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:onClick="selectLevel"-->
+<!--                android:text="Nivel 2"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:background="?attr/lvl_btn_bg"-->
+<!--                android:textColor="?attr/lvl_btn_txt"/>-->
+
+<!--            <Button-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="100dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:onClick="selectLevel"-->
+<!--                android:text="Nivel 3"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:background="?attr/lvl_btn_bg"-->
+<!--                android:textColor="?attr/lvl_btn_txt"/>-->
+
+<!--            <Button-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="100dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:onClick="selectLevel"-->
+<!--                android:text="Nivel 4"-->
+<!--                android:layout_margin="5dp"-->
+<!--                android:background="?attr/lvl_btn_bg"-->
+<!--                android:textColor="?attr/lvl_btn_txt"/>-->
+
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

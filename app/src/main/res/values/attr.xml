@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="AppTheme">
-        <attr name="colorprueba" format="reference|color" />
-        <attr name="border_color" format="reference|color" />
+    <declare-styleable name="DarkTheme">
+        <attr name="main_bg" format="reference|color" />
+
+        <attr name="button_bg" format="reference|color" />
+        <attr name="button_txt" format="reference|color" />
+
+        <attr name="upbar_txt" format="reference|color" />
+
+        <attr name="divider_bg" format="reference|color" />
+        <attr name="options_txt" format="reference|color" />
+        <attr name="options_bg" format="reference|color" />
+
+        <attr name="hint_bg" format="reference|color" />
+        <attr name="hint_txt" format="reference|color" />
+
+        <attr name="keyboard_bg_key" format="reference|color" />
+        <attr name="keyboard_txt" format="reference|color" />
+        <attr name="keyboard_bg" format="reference|color" />
+
+        <attr name="cw_bg" format="reference|color" />
+
+        <attr name="cell_border" format="reference|color" />
         <attr name="fill_lvl_0" format="reference|color" />
         <attr name="fill_lvl_1" format="reference|color" />
         <attr name="fill_lvl_2" format="reference|color" />
-        <attr name="char_txt" format="reference|color" />
-        <attr name="btn_txt" format="reference|color" />
-        <attr name="fill_btn" format="reference|color" />
-        <attr name="text_color" format="reference|color" />
-        <attr name="texto_general" format="reference|color" />
+        <attr name="cell_txt" format="reference|color" />
+        <attr name="cell_correct" format="reference|color" />
+
+        <attr name="lvl_bg" format="reference|color" />
+        <attr name="lvl_btn_bg" format="reference|color" />
+        <attr name="lvl_btn_txt" format="reference|color" />
+
     </declare-styleable>
+
+
 
 </resources>

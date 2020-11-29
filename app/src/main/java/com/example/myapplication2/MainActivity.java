@@ -33,8 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btn_levelSelector = (Button) findViewById(R.id.btn_levelSelector);
         Button btn_options = (Button) findViewById(R.id.btn_options);
-
-
+        Button btn_exit = (Button) findViewById(R.id.btn_exit);
 
         btn_levelSelector.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent optScreen = new Intent(getApplicationContext(), OptionsActivity.class);
                 startActivity(optScreen);
+            }
+        });
+
+        btn_exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
 
