@@ -1,4 +1,4 @@
-package com.example.myapplication2;
+package com.proyecto.cruzando;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.myapplication2.databinding.ActivityLevelSelectorBinding;
+import com.proyecto.cruzando.databinding.ActivityLevelSelectorBinding;
 
 public class LevelSelectorActivity extends AppCompatActivity {
 

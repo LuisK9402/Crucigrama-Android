@@ -1,4 +1,4 @@
-package com.example.myapplication2;
+package com.proyecto.cruzando;
 
 import org.junit.Test;
 

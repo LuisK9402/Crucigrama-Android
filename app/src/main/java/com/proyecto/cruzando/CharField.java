@@ -1,8 +1,6 @@
-package com.example.myapplication2;
+package com.proyecto.cruzando;
 
 import android.content.Context;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class CharField extends androidx.appcompat.widget.AppCompatTextView {
     private int col;

@@ -7,7 +7,7 @@
     <data>
         <variable
             name="customFont"
-            type="com.example.myapplication2.FontOptions"/>
+            type="com.proyecto.cruzando.FontOptions"/>
     </data>
 
     <LinearLayout
@@ -74,15 +74,15 @@
                 android:background="?attr/lvl_btn_bg"
                 android:textColor="?attr/lvl_btn_txt"/>
 
-<!--            <Button-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="100dp"-->
-<!--                android:layout_weight="1"-->
-<!--                android:onClick="selectLevel"-->
-<!--                android:text="Nivel 2"-->
-<!--                android:layout_margin="5dp"-->
-<!--                android:background="?attr/lvl_btn_bg"-->
-<!--                android:textColor="?attr/lvl_btn_txt"/>-->
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:onClick="selectLevel"
+                android:text="Nivel 2"
+                android:layout_margin="5dp"
+                android:background="?attr/lvl_btn_bg"
+                android:textColor="?attr/lvl_btn_txt"/>
 
 <!--            <Button-->
 <!--                android:layout_width="0dp"-->

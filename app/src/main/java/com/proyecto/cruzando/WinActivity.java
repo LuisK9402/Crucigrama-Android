@@ -1,4 +1,4 @@
-package com.example.myapplication2;
+package com.proyecto.cruzando;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,7 +19,8 @@ public class WinActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent levelSelectorScreen = new Intent(getApplicationContext(), LevelSelectorActivity.class);
-                startActivity(levelSelectorScreen);
+                levelSelectorScreen.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivityIfNeeded(levelSelectorScreen, 0);
                 finish();
             }
         });

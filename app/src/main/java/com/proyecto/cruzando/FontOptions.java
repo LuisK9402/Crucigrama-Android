@@ -1,8 +1,7 @@
-package com.example.myapplication2;
+package com.proyecto.cruzando;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.graphics.fonts.FontFamily;
 
 public class FontOptions {
 

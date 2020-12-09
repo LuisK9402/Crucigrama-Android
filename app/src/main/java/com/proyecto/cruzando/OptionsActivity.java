@@ -1,4 +1,4 @@
-package com.example.myapplication2;
+package com.proyecto.cruzando;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -13,9 +13,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.myapplication2.databinding.ActivityOptionsBinding;
+import com.proyecto.cruzando.databinding.ActivityOptionsBinding;
 
 public class OptionsActivity extends AppCompatActivity {
 

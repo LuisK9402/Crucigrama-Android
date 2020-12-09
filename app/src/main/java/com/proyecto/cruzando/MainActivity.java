@@ -1,29 +1,14 @@
-package com.example.myapplication2;
+package com.proyecto.cruzando;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.view.ViewCompat;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.text.Spanned;
-import android.view.Gravity;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.lang.reflect.Field;
 
 public class MainActivity extends AppCompatActivity {
 
