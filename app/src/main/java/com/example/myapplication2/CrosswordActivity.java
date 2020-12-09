@@ -272,7 +272,7 @@ public class CrosswordActivity extends AppCompatActivity {
         }
         if (palabra != null) {
             TextView pista = findViewById(R.id.pista);
-            pista.setText(String.valueOf(edTxt.getHeadIdx())+ ". " + palabra.getDescripcion());
+            pista.setText(String.valueOf(palabra.getIdx()+1)+ ". " + palabra.getDescripcion());
             int head_row = palabra.getHeadRow();
             int head_col = palabra.getHeadColumn();
             int col = head_col;
@@ -482,9 +482,10 @@ public class CrosswordActivity extends AppCompatActivity {
         if(isCorrect(this.crucigrama.getPalabras()[this.focusInfo.getWordFocusedId()])){
             palabra = findUnfinishedWord();
             if(palabra==null){
-                // TODO Win function
                 setCorrect(this.crucigrama.getPalabras()[this.focusInfo.getWordFocusedId()]);
-                Toast.makeText(this, "Ganó !!!", Toast.LENGTH_SHORT).show();
+                Intent winScreen = new Intent(getApplicationContext(), WinActivity.class);
+                startActivity(winScreen);
+                finish();
             }
             else{
                 removeWordFocus(myEdt.getId());

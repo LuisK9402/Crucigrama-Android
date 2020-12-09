@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/DarkTheme">
-        <activity android:name=".OptionsActivity"></activity>
+        <activity android:name=".WinActivity"></activity>
+        <activity android:name=".OptionsActivity" />
         <activity android:name=".LevelSelectorActivity" />
         <activity android:name=".CrosswordActivity" />
         <activity android:name=".MainActivity">
