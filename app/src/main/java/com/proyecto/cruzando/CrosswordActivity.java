@@ -1,6 +1,5 @@
 package com.proyecto.cruzando;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.ViewCompat;

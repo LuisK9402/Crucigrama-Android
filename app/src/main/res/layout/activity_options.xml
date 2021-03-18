@@ -125,7 +125,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Voz a Texto"
+                android:text="Texto a voz"
                 android:textColor="?attr/options_txt"
                 android:layout_weight="0.9"
                 android:layout_gravity="center"
